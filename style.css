@@ -1,0 +1,377 @@
+/* ==========================================
+   CONFIGURAÇÕES GERAIS E VARIÁVEIS
+   ========================================== */
+:root {
+  --bg-gradient: linear-gradient(135deg, #0f0c1b 0%, #1a103c 50%, #0d0722 100%);
+  --card-bg: rgba(30, 21, 59, 0.7);
+  --card-border: rgba(147, 51, 234, 0.2);
+  --text-main: #f3f4f6;
+  --text-muted: #9ca3af;
+  --text-help: #7c3aed;
+  --btn-grad-start: #38bdf8;
+  --btn-grad-end: #c084fc;
+  --accent-cyan: #22d3ee;
+  --shadow-neon: 0 0 20px rgba(192, 132, 252, 0.4);
+  --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  background: var(--bg-gradient);
+  color: var(--text-main);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem 1rem;
+  overflow-x: hidden;
+}
+
+.app-container {
+  width: 100%;
+  max-width: 640px;
+  position: relative;
+}
+
+/* ==========================================
+   GERENCIADOR DE TELAS (SPA)
+   ========================================== */
+.screen {
+  display: none;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: var(--transition-smooth);
+}
+
+.screen.active {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ==========================================
+   ESTILIZAÇÃO DOS CARDS
+   ========================================== */
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 16px;
+  padding: 2.5rem 2rem;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  margin-bottom: 1.5rem;
+}
+
+.main-card {
+  text-align: center;
+}
+
+.main-card h2 {
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+  font-weight: 600;
+}
+
+.main-card p {
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin-bottom: 1.2rem;
+  font-size: 1.05rem;
+}
+
+.prompt-text {
+  color: var(--text-main) !important;
+  font-weight: 500;
+  margin-top: 2rem;
+}
+
+/* ==========================================
+   CABEÇALHOS E LOGO
+   ========================================== */
+.app-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.app-logo {
+  max-width: 80px;
+  height: auto;
+  margin-bottom: 1rem;
+}
+
+.app-header h1 {
+  font-size: 2.2rem;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  margin-bottom: 0.5rem;
+  background: linear-gradient(to right, #fff, #c084fc);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.subtitle {
+  color: var(--text-muted);
+  font-size: 1.1rem;
+}
+
+.app-header-compact {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.app-header-compact h2 {
+  font-size: 1.8rem;
+  color: #fff;
+  margin-bottom: 0.25rem;
+}
+
+.app-header-compact p {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+}
+
+/* ==========================================
+   FORMULÁRIOS E ENTRADAS
+   ========================================== */
+.input-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1.5rem;
+  text-align: left;
+}
+
+.input-group label {
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #e5e7eb;
+}
+
+.input-group input {
+  background: rgba(15, 10, 30, 0.6);
+  border: 1px solid rgba(147, 51, 234, 0.4);
+  border-radius: 8px;
+  padding: 0.85rem 1rem;
+  color: #fff;
+  font-size: 1rem;
+  transition: var(--transition-smooth);
+}
+
+.input-group input:focus {
+  outline: none;
+  border-color: var(--btn-grad-end);
+  box-shadow: 0 0 10px rgba(192, 132, 252, 0.3);
+}
+
+.input-help {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-top: 0.4rem;
+}
+
+/* ==========================================
+   BOTÕES COM ANIMAÇÕES EM GRADIENTE
+   ========================================== */
+.button-group-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+@media (max-width: 480px) {
+  .button-group-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+.btn {
+  position: relative;
+  border: none;
+  border-radius: 8px;
+  padding: 1rem 1.5rem;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  overflow: hidden;
+  transition: var(--transition-smooth);
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.btn-gradient {
+  background: linear-gradient(90deg, var(--btn-grad-start), var(--btn-grad-end));
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.btn-gradient:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-neon);
+  filter: brightness(1.1);
+}
+
+.btn-gradient:active {
+  transform: translateY(0);
+}
+
+.btn-full {
+  width: 100%;
+  margin-top: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.btn-back {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 1rem;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+  transition: var(--transition-smooth);
+}
+
+.btn-back:hover {
+  color: #fff;
+  transform: translateX(-3px);
+}
+
+/* ==========================================
+   CAIXA DE RESULTADOS
+   ========================================== */
+.result-box {
+  background: rgba(15, 10, 32, 0.8);
+  border: 1px solid rgba(34, 211, 238, 0.3);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-top: 1.5rem;
+  margin-bottom: 2rem;
+  text-align: left;
+}
+
+.result-line {
+  font-size: 0.95rem;
+  margin-bottom: 0.5rem;
+  color: #d1d5db;
+}
+
+.result-line strong {
+  color: #fff;
+}
+
+.divider {
+  border: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  margin: 1rem 0;
+}
+
+.result-highlight {
+  text-align: center;
+  padding: 0.5rem 0;
+}
+
+.result-label {
+  font-size: 1rem;
+  color: #e5e7eb;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.result-time {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--accent-cyan);
+  text-shadow: 0 0 12px rgba(34, 211, 238, 0.4);
+  animation: pulse-glow 2s infinite alternate;
+}
+
+/* ==========================================
+   SEÇÕES EXPLICATIVAS
+   ========================================== */
+.explanation-section {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 1.5rem;
+  text-align: left;
+}
+
+.explanation-section h3 {
+  font-size: 1.1rem;
+  margin-bottom: 0.75rem;
+  color: #fff;
+}
+
+.explanation-section p {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin-bottom: 0.75rem;
+}
+
+.disclaimer {
+  font-style: italic;
+  font-size: 0.82rem !important;
+  opacity: 0.8;
+}
+
+/* ==========================================
+   RODAPÉ E CRÉDITOS
+   ========================================== */
+.app-footer {
+  text-align: center;
+  color: rgba(255, 255, 255, 0.3);
+  font-size: 0.85rem;
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.credits a {
+  color: rgba(255, 255, 255, 0.4);
+  text-decoration: none;
+  transition: var(--transition-smooth);
+}
+
+.credits a:hover {
+  color: var(--btn-grad-end);
+}
+
+/* ==========================================
+   CLASSES UTILITÁRIAS & ANIMAÇÕES
+   ========================================== */
+.hidden {
+  display: none !important;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+.animate-slide-up {
+  animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse-glow {
+  from { text-shadow: 0 0 8px rgba(34, 211, 238, 0.3); }
+  to { text-shadow: 0 0 18px rgba(34, 211, 238, 0.7); }
+}
