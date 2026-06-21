@@ -1,0 +1,1 @@
+# cauculandoautonomia-bateria
