@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculadora de Autonomia de Baterias</title>
+  
+  <link rel="icon" type="image/png" href="assets/sua-imagem-da-bateria.png">
+  
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="app-container">
+    
+    <div id="screen-home" class="screen active">
+      <header class="app-header">
+        <h1>Calculadora de Autonomia de Baterias</h1>
+        <p class="subtitle">Estime o tempo de funcionamento para seus sistemas de baterias.</p>
+      </header>
+
+      <main class="card main-card animate-fade-in">
+        <h2>Bem-vindo!</h2>
+        <p>Esta ferramenta ajuda você a calcular a autonomia estimada para dois tipos comuns de sistemas de baterias: <strong>Lítio</strong> e <strong>Estacionárias</strong>.</p>
+        <p>Saber a autonomia é essencial para dimensionar corretamente seus projetos, seja para energia solar, veículos recreativos, nobreaks ou outras aplicações.</p>
+        <p class="prompt-text">Escolha abaixo o tipo de bateria que você deseja calcular:</p>
+
+        <div class="button-group-row">
+          <button class="btn btn-gradient" onclick="switchScreen('screen-lithium')">
+            <span>Calcular Baterias de Lítio</span>
+          </button>
+          <button class="btn btn-gradient" onclick="switchScreen('screen-stationary')">
+            <span>Calcular Baterias Estacionárias</span>
+          </button>
+        </div>
+      </main>
+      
+      <footer class="app-footer">
+        <p>© 2026 Sua Calculadora de Autonomia.</p>
+        <p class="credits">
+          <a href="https://www.flaticon.com/free-icons/battery" title="battery icons" target="_blank" rel="noopener">Battery icons created by Freepik - Flaticon</a>
+        </p>
+      </footer>
+    </div>
+
+    <div id="screen-lithium" class="screen">
+      <button class="btn-back" onclick="switchScreen('screen-home')">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        Voltar
+      </button>
+
+      <header class="app-header-compact">
+        <h2>Calculadora de Autonomia - Lítio</h2>
+        <p>Estime o tempo considerando 85% da capacidade nominal.</p>
+      </header>
+
+      <div class="card animate-slide-up">
+        <form id="form-lithium" onsubmit="calculateLithium(event)">
+          <div class="input-group">
+            <label for="lit-cap">Capacidade Nominal por Bateria (Ah):</label>
+            <input type="number" id="lit-cap" placeholder="Ex: 100" step="any" required>
+            <span class="input-help">Capacidade de fábrica de cada bateria individual.</span>
+          </div>
+
+          <div class="input-group">
+            <label for="lit-qty">Quantidade de Baterias (em paralelo):</label>
+            <input type="number" id="lit-qty" placeholder="Ex: 4" min="1" required>
+            <span class="input-help">Número de baterias idênticas conectadas.</span>
+          </div>
+
+          <div class="input-group">
+            <label for="lit-cons">Consumo Médio (A):</label>
+            <input type="number" id="lit-cons" placeholder="Ex: 9.2" step="any" required>
+            <span class="input-help">Corrente média consumida pelos equipamentos.</span>
+          </div>
+
+          <button type="submit" class="btn btn-gradient btn-full">Calcular Autonomia</button>
+        </form>
+
+        <div id="result-lithium" class="result-box hidden">
+          <div class="result-line">Capacidade Total Nominal: <strong id="res-lit-nominal">0.0 Ah</strong></div>
+          <div class="result-line">Capacidade Útil (85%): <strong id="res-lit-useful">0.0 Ah</strong></div>
+          <hr class="divider">
+          <div class="result-highlight">
+            <span class="result-label">Tempo Estimado de Autonomia:</span>
+            <div class="result-time" id="res-lit-time">0 horas e 0 minutos</div>
+          </div>
+        </div>
+
+        <section class="explanation-section">
+          <h3>Entendendo o Cálculo (Lítio)</h3>
+          <p>Esta calculadora multiplica a capacidade por bateria pela quantidade para obter a capacidade nominal total. Em seguida, aplica um fator de <strong>85%</strong> a essa capacidade total para estimar a capacidade útil (considerando uma margem de segurança para prolongar a vida útil). Finalmente, divide a capacidade útil pelo consumo médio para estimar a autonomia em horas e minutos.</p>
+          <p class="disclaimer">Lembre-se, este é um cálculo teórico. Fatores como temperatura e idade da bateria podem influenciar o resultado real.</p>
+        </section>
+      </div>
+    </div>
+
+    <div id="screen-stationary" class="screen">
+      <button class="btn-back" onclick="switchScreen('screen-home')">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        Voltar
+      </button>
+
+      <header class="app-header-compact">
+        <h2>Calculadora de Autonomia - Estacionária</h2>
+        <p>Para sistemas com baterias 12V (63Ah/string) em arranjos de 48V.</p>
+      </header>
+
+      <div class="card animate-slide-up">
+        <form id="form-stationary" onsubmit="calculateStationary(event)">
+          <div class="input-group">
+            <label for="stat-qty">Quantidade Total de Baterias (12V):</label>
+            <input type="number" id="stat-qty" placeholder="Ex: 8" min="4" step="4" required>
+            <span class="input-help">Número total de baterias de 12V no sistema (deve ser múltiplo de 4).</span>
+          </div>
+
+          <div class="input-group">
+            <label for="stat-f1">Consumo Fonte 01 (A):</label>
+            <input type="number" id="stat-f1" placeholder="Ex: 4" step="any" required>
+            <span class="input-help">Corrente consumida pela Fonte 01 (Amperes).</span>
+          </div>
+
+          <div class="input-group">
+            <label for="stat-f2">Consumo Fonte 02 (A):</label>
+            <input type="number" id="stat-f2" placeholder="Ex: 5" step="any" required>
+            <span class="input-help">Corrente consumida pela Fonte 02 (Amperes).</span>
+          </div>
+
+          <button type="submit" class="btn btn-gradient btn-full">Calcular Autonomia</button>
+        </form>
+
+        <div id="result-stationary" class="result-box hidden">
+          <div class="result-line">Nº de Strings (4x12V): <strong id="res-stat-strings">0</strong></div>
+          <div class="result-line">Capacidade Total Nominal (X x 63Ah): <strong id="res-stat-nominal">0.0 Ah</strong></div>
+          <div class="result-line">Capacidade Útil (80% DoD): <strong id="res-stat-useful">0.0 Ah</strong></div>
+          <div class="result-line">Consumo Total Calculado (F1 + F2): <strong id="res-stat-total-cons">0.0 A</strong></div>
+          <hr class="divider">
+          <div class="result-highlight">
+            <span class="result-label">Tempo Estimado de Autonomia:</span>
+            <div class="result-time" id="res-stat-time">0 horas e 0 minutos</div>
+          </div>
+        </div>
+
+        <section class="explanation-section">
+          <h3>Entendendo o Cálculo (Estacionária)</h3>
+          <p>Este cálculo assume que as baterias de 12V estão agrupadas em <strong>strings de 4 baterias em série</strong> (formando 48V). Cada string contribui com uma capacidade nominal (assumida aqui como <strong>63Ah</strong>). A capacidade total é a soma da capacidade de cada string.</p>
+          <p>Para estimar a capacidade útil, esta calculadora aplica um fator de profundidade de descarga (DoD) de <strong>80%</strong> à capacidade nominal total, conforme solicitado.</p>
+          <p>O consumo total considerado é a <strong>soma dos consumos da Fonte 01 e Fonte 02</strong> informados.</p>
+          <p class="autonomia">A autonomia é então estimada dividindo a capacidade útil pelo consumo total.</p>
+          <p class="disclaimer">Este cálculo é uma estimativa baseada em parâmetros comuns. A capacidade real por string (63Ah) e o DoD ideal (80%) podem variar. Consulte as especificações do fabricante e as condições de uso.</p>
+        </section>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
